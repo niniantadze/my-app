@@ -15,7 +15,7 @@ function App() {
         >
           Open-source code
         </a>
-        , by Nini Antadze 🧚‍♀️
+        , by Nini Antadze 🧚‍♀️ with love 💖
       </h6>
     </div>
   );
