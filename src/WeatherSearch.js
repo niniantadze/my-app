@@ -6,6 +6,7 @@ export default function WeatherSearch() {
   const [city, setCity] = useState("");
   const [loaded, setLoaded] = useState(false);
   const [weather, setWeather] = useState({});
+  const [error, setError] = useState(null);
 
   function displayWeather(response) {
     setLoaded(true);
@@ -17,11 +18,18 @@ export default function WeatherSearch() {
       description: response.data.weather[0].description,
     });
   }
+
+  function handleError(error) {
+    setLoaded(true);
+    setError("Sorry, something went wrong. Please try again.");
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
     let apiKey = "094780c710fa4efd669f0df8c3991927";
     let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
-    axios.get(apiUrl).then(displayWeather);
+
+    axios.get(apiUrl).then(displayWeather).catch(handleError);
   }
 
   function updateCity(event) {
@@ -36,6 +44,10 @@ export default function WeatherSearch() {
   );
 
   if (loaded) {
+    if (error) {
+      return <div>{error}</div>;
+    }
+
     return (
       <div>
         {form}
